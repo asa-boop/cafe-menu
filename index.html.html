@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كافيه جولد - قائمة الطعام</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', 'Amiri', Arial, sans-serif;
+            background: linear-gradient(135deg, #2c1810 0%, #3d2817 50%, #2c1810 100%);
+            color: #f5f5dc;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .menu-page {
+            background: linear-gradient(135deg, #3d2817 0%, #2c1810 50%, #3d2817 100%);
+            border: 3px solid #d4af37;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="wood" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23654321"/><path d="M0 0h100v20H0zM0 40h100v20H0zM0 80h100v20H0z" fill="%23543a2a" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23wood)"/></svg>') repeat;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .menu-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-family: 'Amiri', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #d4af37, #ffd700, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo .subtitle {
+            font-size: 1.2rem;
+            color: #d4af37;
+            font-style: italic;
+            opacity: 0.8;
+        }
+        
+        .decorative-line {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 20px auto;
+        }
+        
+        .menu-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .menu-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 25px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .section-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d4af37;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .menu-items {
+            list-style: none;
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dotted #d4af37;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 5px;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-name {
+            font-size: 1.1rem;
+            color: #f5f5dc;
+            font-weight: 400;
+            flex: 1;
+        }
+        
+        .item-price {
+            font-size: 1.1rem;
+            color: #d4af37;
+            font-weight: 600;
+            margin-left: 20px;
+            white-space: nowrap;
+        }
+        
+        .item-price::after {
+            content: ' ج.م';
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 2px solid #d4af37;
+        }
+        
+        .footer h3 {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        
+        .footer p {
+            color: #f5f5dc;
+            opacity: 0.8;
+            margin: 5px 0;
+        }
+        
+        .contact-info {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-container {
+                padding: 10px;
+            }
+            
+            .menu-page {
+                padding: 20px;
+            }
+            
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+            
+            .menu-sections {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .item-name, .item-price {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .menu-page {
+                background: white;
+                border: 2px solid #000;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            
+            .menu-page::before {
+                display: none;
+            }
+            
+            .logo h1 {
+                color: #000;
+                -webkit-text-fill-color: #000;
+            }
+            
+            .section-title {
+                color: #000;
+                border-bottom-color: #000;
+            }
+            
+            .item-price {
+                color: #000;
+            }
+            
+            .menu-item {
+                border-bottom-color: #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <!-- الصفحة الأولى -->
+        <div class="menu-page">
+            <div class="menu-content">
+                <div class="logo">
+                    <h1>كافيه جولد</h1>
+                    <p class="subtitle">CAFE GOLD</p>
+                </div>
+                <div class="decorative-line"></div>
+                
+                <div class="menu-sections">
+                    <!-- المشروبات الساخنة -->
+                    <div class="menu-section">
+                        <h2 class="section-title">مشروبات ساخنة</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">شاي</span>
+                                <span class="item-price">20.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">شاي باللبن</span>
+                                <span class="item-price">45.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">شاي أخضر</span>
+                                <span class="item-price">20.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">شاي نكهات (نعناع - ليمون - قرنفل)</span>
+                                <span class="item-price">25.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">قهوة تركي سنجل</span>
+                                <span class="item-price">25.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">قهوة تركي دبل</span>
+                                <span class="item-price">30.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">قهوة فرنساوي</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">قهوة بندق</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">قهوة نكهات (شوكولاتة - كراميل - نوتيلا)</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">أمريكان كوفي</span>
+                                <span class="item-price">40.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">إسبرسو سنجل</span>
+                                <span class="item-price">30.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">إسبرسو دبل</span>
+                                <span class="item-price">40.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">إسبرسو نكهات (فانيليا - كراميل - شوكولاتة)</span>
+                                <span class="item-price">45.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ماكياتو</span>
+                                <span class="item-price">35.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">كورتادو</span>
+                                <span class="item-price">40.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">فلات وايت</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">كابتشينو</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">كابتشينو نكهات (بندق - كراميل - شوكولاتة)</span>
+                                <span class="item-price">60.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">لاتيه</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">موكا</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- المشروبات الساخنة - تكملة -->
+                    <div class="menu-section">
+                        <h2 class="section-title">مشروبات ساخنة - تكملة</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">هوت شوكليت</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">هوت سيدر</span>
+                                <span class="item-price">40.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">هوت أوريو</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ينسون</span>
+                                <span class="item-price">20.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">قرفة</span>
+                                <span class="item-price">20.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">كركديه</span>
+                                <span class="item-price">20.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">جنزبيل</span>
+                                <span class="item-price">20.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">جنزبيل باللبن</span>
+                                <span class="item-price">45.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">حلبة</span>
+                                <span class="item-price">20.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">حلبة باللبن</span>
+                                <span class="item-price">45.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">نعناع</span>
+                                <span class="item-price">20.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">قرنفل</span>
+                                <span class="item-price">5.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سحلب سادة</span>
+                                <span class="item-price">45.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سحلب مكسرات</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">لبن ساخن</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">براد شاي عربي (4 أكواب)</span>
+                                <span class="item-price">75.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- الصفحة الثانية -->
+        <div class="menu-page">
+            <div class="menu-content">
+                <div class="logo">
+                    <h1>كافيه جولد</h1>
+                    <p class="subtitle">CAFE GOLD</p>
+                </div>
+                <div class="decorative-line"></div>
+                
+                <div class="menu-sections">
+                    <!-- المشروبات الباردة والعصائر -->
+                    <div class="menu-section">
+                        <h2 class="section-title">مشروبات باردة وعصائر</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">بيبسي (كانز)</span>
+                                <span class="item-price">30.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">بيبسي (حبة)</span>
+                                <span class="item-price">30.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سفن</span>
+                                <span class="item-price">30.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ميرندا (كانز)</span>
+                                <span class="item-price">30.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">شويبس (كانز)</span>
+                                <span class="item-price">30.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ستينج</span>
+                                <span class="item-price">30.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ريدبول (كانز)</span>
+                                <span class="item-price">75.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">مياه (ازازة صغيرة)</span>
+                                <span class="item-price">10.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">مياه (ازازة)</span>
+                                <span class="item-price">10.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير مانجا</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير برتقال</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير فراولة</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير كيوي</span>
+                                <span class="item-price">85.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير موز</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير جوافة</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير جوافة باللبن</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير بطيخ</span>
+                                <span class="item-price">60.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير بطيخ بالنعناع</span>
+                                <span class="item-price">60.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير كنتالوب</span>
+                                <span class="item-price">60.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير شهد</span>
+                                <span class="item-price">60.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- العصائر - تكملة -->
+                    <div class="menu-section">
+                        <h2 class="section-title">عصائر - تكملة</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">عصير ليمون</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير ليمون بالنعناع</span>
+                                <span class="item-price">50.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير برقوق</span>
+                                <span class="item-price">60.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير بلح باللبن</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير موز باللبن</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير أفوكادو بالمكسرات</span>
+                                <span class="item-price">95.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير أفوكادو بالعسل</span>
+                                <span class="item-price">85.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">عصير هوهوز</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- الصفحة الثالثة -->
+        <div class="menu-page">
+            <div class="menu-content">
+                <div class="logo">
+                    <h1>كافيه جولد</h1>
+                    <p class="subtitle">CAFE GOLD</p>
+                </div>
+                <div class="decorative-line"></div>
+                
+                <div class="menu-sections">
+                    <!-- ميلك شيك -->
+                    <div class="menu-section">
+                        <h2 class="section-title">ميلك شيك</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">ميلك شيك فراولة</span>
+                                <span class="item-price">80.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ميلك شيك مانجا</span>
+                                <span class="item-price">80.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ميلك شيك أوريو</span>
+                                <span class="item-price">75.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ميلك شيك شوكليت</span>
+                                <span class="item-price">80.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ميلك شيك لوتس</span>
+                                <span class="item-price">80.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ميلك شيك كيوي</span>
+                                <span class="item-price">80.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ميلك شيك موز</span>
+                                <span class="item-price">80.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">ميلك شيك بلوبيري</span>
+                                <span class="item-price">80.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- قهوة مثلجة -->
+                    <div class="menu-section">
+                        <h2 class="section-title">قهوة مثلجة</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">آيس لاتيه</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">آيس موكا</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">آيس أوريو</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">آيس شوكليت</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">آيس فرابيه</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">آيس كوفي جولد</span>
+                                <span class="item-price">70.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- سموزي -->
+                    <div class="menu-section">
+                        <h2 class="section-title">سموزي</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">سموزي مانجا</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سموزي فراولة</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سموزي بلوبيري</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سموزي أناناس</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سموزي توت أحمر</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سموزي جوز هند</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سموزي ليمون نعناع</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سموزي بطيخ</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">سموزي كيوي</span>
+                                <span class="item-price">55.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- الصفحة الرابعة -->
+        <div class="menu-page">
+            <div class="menu-content">
+                <div class="logo">
+                    <h1>كافيه جولد</h1>
+                    <p class="subtitle">CAFE GOLD</p>
+                </div>
+                <div class="decorative-line"></div>
+                
+                <div class="menu-sections">
+                    <!-- كوكتيلات خاصة -->
+                    <div class="menu-section">
+                        <h2 class="section-title">كوكتيلات خاصة</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">بيناكولادا</span>
+                                <span class="item-price">85.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">فلوريدا</span>
+                                <span class="item-price">85.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">موهيتو</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">صن رايز</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">صن سيت</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">صن شاين</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">جولد بور</span>
+                                <span class="item-price">90.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">مكس جولد (فراولة، مانجو، بلوبيري، تفاح، رمان، جوز هند، ليمون نعناع)</span>
+                                <span class="item-price">65.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- حلويات وآيس كريم -->
+                    <div class="menu-section">
+                        <h2 class="section-title">حلويات وآيس كريم</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">آيس كريم نكهات صغير (2 بولة)</span>
+                                <span class="item-price">25.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">آيس كريم نكهات وسط (3 بولة)</span>
+                                <span class="item-price">33.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">آيس كريم نكهات كبير (4 بولة)</span>
+                                <span class="item-price">45.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">بولة آيس فانيليا</span>
+                                <span class="item-price">5.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">تشيز كيك نكهات (قطعة)</span>
+                                <span class="item-price">75.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">مولتن كيك (قطعة)</span>
+                                <span class="item-price">90.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">تيراميسو (قطعة)</span>
+                                <span class="item-price">75.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">بان كيك (12 قطعة)</span>
+                                <span class="item-price">60.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">بان كيك كبير</span>
+                                <span class="item-price">115.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- شيشة -->
+                    <div class="menu-section">
+                        <h2 class="section-title">شيشة</h2>
+                        <ul class="menu-items">
+                            <li class="menu-item">
+                                <span class="item-name">معسل قص</span>
+                                <span class="item-price">25.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">معسل سلوم</span>
+                                <span class="item-price">25.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">معسل زغلول</span>
+                                <span class="item-price">25.00</span>
+                            </li>
+                            <li class="menu-item">
+                                <span class="item-name">شيشة فاخر</span>
+                                <span class="item-price">95.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                    <h3>Better Together</h3>
+                    <div class="decorative-line"></div>
+                    <div class="contact-info">
+                        <p>كافيه جولد - تجربة قهوة استثنائية</p>
+                        <p>العنوان: [يرجى إضافة العنوان]</p>
+                        <p>الهاتف: [يرجى إضافة رقم الهاتف]</p>
+                        <p>وسائل التواصل الاجتماعي: [يرجى إضافة الحسابات]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
