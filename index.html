@@ -1,374 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منيو كافيه جولد</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Cairo', 'Amiri', serif;
-            background: linear-gradient(135deg, #1a0f08, #2d1a0f);
-            color: #ffd700;
-            line-height: 1.4;
-            font-weight: 600;
-        }
-        
-        .menu-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .menu-page {
-            background: linear-gradient(135deg, #2d1a0f, #1a0f08);
-            border: 4px solid #ffd700;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
-            box-shadow: 0 15px 40px rgba(255,215,0,0.3), inset 0 0 30px rgba(255,215,0,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .menu-page::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%);
-            animation: glow 4s ease-in-out infinite alternate;
-        }
-        
-        @keyframes glow {
-            from { opacity: 0.3; }
-            to { opacity: 0.7; }
-        }
-        
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .logo h1 {
-            font-size: 3.8em;
-            color: #ffd700;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 20px rgba(255,215,0,0.5);
-            margin-bottom: 8px;
-            letter-spacing: 4px;
-            font-weight: 700;
-        }
-        
-        .logo .subtitle {
-            font-size: 1.3em;
-            color: #ffed4e;
-            font-style: italic;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-        }
-        
-        .menu-section {
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .section-title {
-            font-size: 2.4em;
-            color: #ffd700;
-            text-align: center;
-            margin-bottom: 18px;
-            padding-bottom: 8px;
-            border-bottom: 3px solid #ffd700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 15px rgba(255,215,0,0.4);
-            font-weight: 700;
-        }
-        
-        .menu-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 8px;
-        }
-        
-        .menu-item {
-            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.1));
-            padding: 10px 15px;
-            border-radius: 12px;
-            border: 2px solid rgba(255,215,0,0.4);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 1.1em;
-            font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-            color: #ffd700;
-        }
-        
-        .menu-item:hover {
-            background: linear-gradient(135deg, rgba(255,215,0,0.35), rgba(255,215,0,0.25));
-            border-color: #ffd700;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255,215,0,0.4);
-            color: #ffed4e;
-        }
-        
-        .decorative-border {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            right: 12px;
-            bottom: 12px;
-            border: 3px solid rgba(255,215,0,0.5);
-            border-radius: 15px;
-            pointer-events: none;
-        }
-        
-        .coffee-icon {
-            text-align: center;
-            font-size: 3.5em;
-            color: #ffd700;
-            margin-bottom: 15px;
-            text-shadow: 0 0 20px rgba(255,215,0,0.6);
-        }
-        
-        @media (max-width: 768px) {
-            .menu-page {
-                padding: 20px;
-            }
-            
-            .logo h1 {
-                font-size: 2.8em;
-            }
-            
-            .section-title {
-                font-size: 2em;
-            }
-            
-            .menu-items {
-                grid-template-columns: 1fr;
-                gap: 6px;
-            }
-            
-            .menu-item {
-                font-size: 1.05em;
-                padding: 8px 12px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="menu-container">
-        <!-- الصفحة الأولى -->
-        <div class="menu-page">
-            <div class="decorative-border"></div>
-            <div class="logo">
-                <div class="coffee-icon">☕</div>
-                <h1>CAFÉ GOLD</h1>
-                <div class="subtitle">Better Together</div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">مشروبات ساخنة</h2>
-                <div class="menu-items">
-                    <div class="menu-item">كابتشينو</div>
-                    <div class="menu-item">فلات وايت</div>
-                    <div class="menu-item">لاتيه</div>
-                    <div class="menu-item">لاتيه بالفستق</div>
-                    <div class="menu-item">موكا</div>
-                    <div class="menu-item">موكا بالنوتيلا</div>
-                    <div class="menu-item">ميكاتو كراميل</div>
-                    <div class="menu-item">هوت سيدر</div>
-                    <div class="menu-item">شوكولاتة ساخنة</div>
-                    <div class="menu-item">اوريو ساخن</div>
-                    <div class="menu-item">سحلب</div>
-                    <div class="menu-item">سحلب مكسرات</div>
-                    <div class="menu-item">سحلب قرفة</div>
-                    <div class="menu-item">سحلب اوريو</div>
-                    <div class="menu-item">اسبرسو سنجل</div>
-                    <div class="menu-item">اسبرسو دبل</div>
-                    <div class="menu-item">اسبرسو نوتيلا</div>
-                    <div class="menu-item">قهوة بلاك امريكي</div>
-                    <div class="menu-item">قهوة امريكي باللبن</div>
-                    <div class="menu-item">نكهات اضافية (بندق، كراميل و فانيليا)</div>
-                    <div class="menu-item">كورتادو</div>
-                    <div class="menu-item">شاي</div>
-                    <div class="menu-item">شاي باللبن</div>
-                    <div class="menu-item">شاي اخضر</div>
-                    <div class="menu-item">شاي نكهات (مانجو، فراولة و خوخ)</div>
-                    <div class="menu-item">كركديه</div>
-                    <div class="menu-item">ينسون</div>
-                    <div class="menu-item">نعناع</div>
-                    <div class="menu-item">جنزبيل</div>
-                    <div class="menu-item">قرفة</div>
-                    <div class="menu-item">قرفة باللبن</div>
-                    <div class="menu-item">قهوة تركي سنجل</div>
-                    <div class="menu-item">قهوة تركي دبل</div>
-                    <div class="menu-item">قهوة فرنسي</div>
-                    <div class="menu-item">قهوة نوتيلا</div>
-                    <div class="menu-item">قهوة نوتيلا باللبن</div>
-                    <div class="menu-item">قهوة بندق</div>
-                    <div class="menu-item">نسكافيه بلاك</div>
-                    <div class="menu-item">نسكافيه باللبن</div>
-                </div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">مشروبات مثلجة</h2>
-                <div class="menu-items">
-                    <div class="menu-item">موكا مثلجة</div>
-                    <div class="menu-item">قهوة مثلجة</div>
-                    <div class="menu-item">لاتيه مثلج</div>
-                    <div class="menu-item">شوكولاتة مثلجة</div>
-                    <div class="menu-item">كابتشينو مثلج</div>
-                    <div class="menu-item">لاتيه كراميل مثلج</div>
-                    <div class="menu-item">لاتيه فستق مثلج</div>
-                    <div class="menu-item">ايس كوفى كيبوس</div>
-                    <div class="menu-item">كابتشينو ابيض مثلج</div>
-                </div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">ايس كريم</h2>
-                <div class="menu-items">
-                    <div class="menu-item">ايس كريم فانيليا</div>
-                    <div class="menu-item">ايس كريم شوكولاتة</div>
-                    <div class="menu-item">مكس ايس كريم</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- الصفحة الثانية -->
-        <div class="menu-page">
-            <div class="decorative-border"></div>
-            <div class="logo">
-                <div class="coffee-icon">🥤</div>
-                <h1>CAFÉ GOLD</h1>
-                <div class="subtitle">Better Together</div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">فرابيه</h2>
-                <div class="menu-items">
-                    <div class="menu-item">فرابيه كراميل</div>
-                    <div class="menu-item">فرابيه شوكولاتة</div>
-                    <div class="menu-item">فرابيه موكا</div>
-                    <div class="menu-item">فرابيه فانيليا</div>
-                    <div class="menu-item">فرابيه وايت</div>
-                    <div class="menu-item">فرابيه بلاك</div>
-                    <div class="menu-item">فرابيه لوتس</div>
-                    <div class="menu-item">فرابيتشينو</div>
-                </div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">ميلك شيك</h2>
-                <div class="menu-items">
-                    <div class="menu-item">ميلك شيك مانجو</div>
-                    <div class="menu-item">ميلك شيك توت ازرق</div>
-                    <div class="menu-item">ميلك شيك شوكولاتة</div>
-                    <div class="menu-item">ميلك شيك كراميل</div>
-                    <div class="menu-item">ميلك شيك فراولة</div>
-                    <div class="menu-item">ميلك شيك اوريو</div>
-                    <div class="menu-item">ميلك شيك مكس توت</div>
-                    <div class="menu-item">ميلك شيك كيوي</div>
-                    <div class="menu-item">ميلك شيك فانيليا</div>
-                    <div class="menu-item">ميلك شيك ميكس وسط البلد</div>
-                    <div class="menu-item">ميلك شيك لوتس</div>
-                    <div class="menu-item">ميلك شيك مانجو خوخ</div>
-                    <div class="menu-item">ميلك شوكليت سبريسو</div>
-                    <div class="menu-item">ميلك شيك نوتيلا</div>
-                    <div class="menu-item">ميلك شيك نوتيلا بيضاء</div>
-                    <div class="menu-item">ميلك شيك هوهوز</div>
-                    <div class="menu-item">ميلك شيك توينكيز</div>
-                    <div class="menu-item">ميلك مولتن</div>
-                    <div class="menu-item">ميلك تشيز</div>
-                </div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">سموزي</h2>
-                <div class="menu-items">
-                    <div class="menu-item">سموزي بطيخ</div>
-                    <div class="menu-item">سموزي مانجو</div>
-                    <div class="menu-item">سموزي جوافة</div>
-                    <div class="menu-item">سموزي فراولة</div>
-                    <div class="menu-item">سموزي كيوي</div>
-                    <div class="menu-item">سموزي توت ازرق</div>
-                    <div class="menu-item">سموزي مكس توت</div>
-                    <div class="menu-item">سموزي اناناس</div>
-                    <div class="menu-item">سموزي خوخ</div>
-                    <div class="menu-item">سموزي باشون</div>
-                    <div class="menu-item">سموزي بينا كولادا</div>
-                </div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">سموزي ميكسات</h2>
-                <div class="menu-items">
-                    <div class="menu-item">سموزي مانجو و خوخ</div>
-                    <div class="menu-item">سموزي مانجو و توت</div>
-                    <div class="menu-item">سموزي فراولة و نعناع</div>
-                    <div class="menu-item">سموزي جوافة و نعناع</div>
-                    <div class="menu-item">سموزي فراولة و اناناس</div>
-                    <div class="menu-item">سموزي بطيخ و اناناس</div>
-                </div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">عصائر طازجة</h2>
-                <div class="menu-items">
-                    <div class="menu-item">عصير برتقال</div>
-                    <div class="menu-item">عصير جوافة</div>
-                    <div class="menu-item">عصير فراولة</div>
-                    <div class="menu-item">عصير كيوي</div>
-                    <div class="menu-item">عصير مانجو</div>
-                    <div class="menu-item">عصير مانجو باشون</div>
-                    <div class="menu-item">عصير ليمون</div>
-                    <div class="menu-item">عصير ليمون نعناع</div>
-                </div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">مشروبات غازية</h2>
-                <div class="menu-items">
-                    <div class="menu-item">صن شاين</div>
-                    <div class="menu-item">اليكتريك</div>
-                    <div class="menu-item">صودا نكهات (ليمون نعناع، كيوي، مخيتو و جوزهند)</div>
-                    <div class="menu-item">موهيتو</div>
-                    <div class="menu-item">ريدبول موخيتو</div>
-                    <div class="menu-item">ريدبول جوزهند</div>
-                    <div class="menu-item">ريدبول ليمون نعناع</div>
-                    <div class="menu-item">صودا وسط البلد (برتقال، فراولة، ليمون و نعناع)</div>
-                    <div class="menu-item">بيبسي</div>
-                    <div class="menu-item">ميرندا</div>
-                    <div class="menu-item">سفن اب</div>
-                    <div class="menu-item">فيروز</div>
-                    <div class="menu-item">بيريل</div>
-                    <div class="menu-item">شويبس جولد</div>
-                    <div class="menu-item">ريد بول</div>
-                    <div class="menu-item">مياه معدنية</div>
-                </div>
-            </div>
-            
-            <div class="menu-section">
-                <h2 class="section-title">شيشة</h2>
-                <div class="menu-items">
-                    <div class="menu-item">شيشة قص (٢ حجر)</div>
-                    <div class="menu-item">شيشة سلوم (٢ حجر)</div>
-                    <div class="menu-item">شيشة فواكه</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-
